@@ -1,4 +1,4 @@
-# MOSAIC: Machine-Learning-Assisted Image Analysis
+# 🧪 📷 MOSAIC: Machine-Learning-Assisted Image Analysis
 
 Park, C.; Dissanayake-Perera, S.; Ng, H.-C.; Sadler, C. J.; Gallego Rubio, C.; Nam, K.; Prasad, S. K.; Stevens, M. M. Nanozyme-Catalyzed Lateral Flow Assay for the Simultaneous Detection of RNA and Protein Biomarkers. _ACS Nano_, in press (2026).
 
