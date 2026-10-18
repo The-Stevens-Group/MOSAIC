@@ -74,7 +74,10 @@ Use the authentication token displayed in the terminal to access Jupyter Noteboo
 ### Step 4: Install additional dependencies
 
 Open `/src/install_tf2.15.ipynb` and run the notebook to install all required dependencies. You can safely ignore any error messages displayed in the output.
+
 ## 3. Data Format
+
+_Note: This section can be skipped if you are only interested in running or exploring the code and computational pipeline. The following data format details are primarily intended for users who wish to reproduce the experimental analysis or use their own datasets._
 
 ### 3.1 Experimental Image Data
 
