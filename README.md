@@ -2,6 +2,8 @@
 
 Park, C.; Dissanayake-Perera, S.; Ng, H.-C.; Sadler, C. J.; Gallego Rubio, C.; Nam, K.; Prasad, S. K.; Stevens, M. M. Nanozyme-Catalyzed Lateral Flow Assay for the Simultaneous Detection of RNA and Protein Biomarkers. _ACS Nano_, in press (2026).
 
+**If you use this repository in your research, please cite the associated MOSAIC publication.**
+
 ## 1. Overview
 
 This repository contains the Python code developed for the machine-learning-assisted quantitative interpretation of the MOSAIC (Multiplexed Orthogonal Sensing Assay Integrated with CRISPRZyme) lateral flow assay.
@@ -167,3 +169,94 @@ The object detection model recognizes five classes:
 The training code converts COCO category IDs to zero-based class indices and bounding boxes to `[x_min, y_min, x_max, y_max]` coordinates.
 
 The training notebook expects image files in subdirectories of `data/lfa_single_ds/`, with filenames matching the COCO annotations.
+
+## 4. Reproducing the Quantitative Analysis (Figure 6)
+
+The main analysis notebook is:
+
+**`mosaic_main_ml.ipynb`**
+
+This notebook performs the complete machine-learning-assisted quantitative analysis.
+
+
+### Step 1: Configure the input data
+
+The notebook uses:
+
+```python
+img_conc_csv = "../data/Figure6/img_conc.csv"
+```
+
+Ensure that the CSV file and corresponding images are available at this location.
+
+
+### Step 2: Load the trained YOLO model
+
+The trained model checkpoint used for the analysis is:
+
+```text
+saved_mdl/detect_yolo_xs/yolo_kfold_4.h5
+```
+
+Retraining YOLO is not required to reproduce the quantitative analysis.
+
+
+### Step 3: Run the analysis
+
+Execute the notebook cells sequentially.
+
+The workflow performs the following steps:
+
+1. Reads the concentration metadata and groups replicate images.
+2. Performs YOLO-assisted strip, test-line, and reference-grid detection.
+3. Estimates missing test-band regions using geometric relationships where applicable.
+4. Extracts one-dimensional intensity profiles.
+5. Performs ALS baseline correction and peak-area integration.
+6. Normalizes test-line peak areas against the reference grid.
+7. Fits separate 4PL calibration curves for ORF1ab RNA and S protein.
+
+
+### Step 4: Obtain the results
+
+The notebook generates calibration plots and exports measured and fitted data.
+
+Exported calibration files are saved to:
+
+```text
+saved_mdl/4pl/
+```
+
+These include observed calibration measurements and fitted 4PL curves suitable for further analysis or visualization in GraphPad Prism.
+
+**Note:** The notebook uses relative paths. The supplied configuration expects the notebook to run from a directory one level below the repository root, with `data/` and `saved_mdl/` located at the root. Adjust these paths if the repository structure differs.
+
+
+## 5. YOLOv8 Model Training
+
+The notebook:
+
+**`detect_yolo_kfold.ipynb`**
+
+contains the implementation of YOLOv8 object detection model training and five-fold cross-validation.
+
+It includes:
+
+- Dataset preprocessing
+- Data augmentation
+- YOLOv8 model training
+- Five-fold cross-validation
+- Model evaluation
+- Model checkpoint saving
+
+This notebook is provided for reproducibility of the object detection model development.
+
+**Running the training notebook is NOT required to reproduce the Figure 6 quantitative analysis**.
+
+The training notebook uses its own relative dataset and output paths, which may require adjustment depending on its location within the repository.
+
+
+## 6. Data Availability
+
+The raw research data supporting the MOSAIC study are available through Zenodo:
+
+https://doi.org/10.5281/zenodo.22900029
